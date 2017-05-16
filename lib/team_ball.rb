@@ -1,14 +1,10 @@
 class TeamBall
 
-  attr_reader :count
+  attr_accessor :count, :team
 
   def initialize(team)
     @team = team
     @count = count
   end
-
-  # def count
-  #   @team.count
-  # end
 
 end
