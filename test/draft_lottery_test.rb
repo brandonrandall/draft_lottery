@@ -7,9 +7,7 @@ require './lib/mixer'
 class DraftLotteryTest < Minitest::Test
 
   def setup
-
     @mixer = Mixer.new
-
     celtics = TeamBall.new("Boston Celtics")
     @celtics_balls = 250.times {@mixer.cage.push(celtics)}
     suns = TeamBall.new("Phoenix Suns")
@@ -36,15 +34,12 @@ class DraftLotteryTest < Minitest::Test
     @nuggets_balls = 6.times {@mixer.cage.push(nuggets)}
     heat = TeamBall.new("Miami Heat")
     @heat_balls = 5.times {@mixer.cage.push(heat)}
-
   end
 
   def test_teams_have_correct_amounts_of_balls
-
     assert_equal 250, @celtics_balls
     assert_equal 156, @lakers_balls
     assert_equal 6, @nuggets_balls
-# count the number of balls in the cage
     assert_equal 947, @mixer.balls_in_cage
   end
 
@@ -62,7 +57,7 @@ class DraftLotteryTest < Minitest::Test
     first_pick          = @mixer.current_pick
     teams_not_picked    = @mixer.choose
     current_picked_team = @mixer.current_pick
-# binding.pry
+
     refute first_pick == current_picked_team
   end
 
@@ -75,8 +70,6 @@ class DraftLotteryTest < Minitest::Test
     third_pick          = @mixer.current_pick
 
     refute first_pick == third_pick
-    binding.pry
     refute second_pick == third_pick
-
   end
 end
