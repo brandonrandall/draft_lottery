@@ -44,32 +44,55 @@ class DraftLotteryTest < Minitest::Test
   end
 
   def test_cage_can_make_one_pick
-    teams_not_picked    = @mixer.choose
+    teams_picked        = @mixer.choose
     current_picked_team = @mixer.current_pick
 
-    refute teams_not_picked.include?(current_picked_team)
+    refute teams_picked.include?(current_picked_team)
     assert_equal Integer, @mixer.balls_in_cage.class
     assert (@mixer.balls_in_cage < 947), "Mixer count is not less than 947."
   end
 
   def test_cage_can_make_more_than_one_pick
-    teams_not_picked    = @mixer.choose
+    teams_picked        = @mixer.choose
     first_pick          = @mixer.current_pick
-    teams_not_picked    = @mixer.choose
+    teams_picked        = @mixer.choose
     current_picked_team = @mixer.current_pick
 
     refute first_pick == current_picked_team
   end
 
   def test_cage_can_make_3_picks
-    teams_not_picked    = @mixer.choose
+    teams_picked        = @mixer.choose
     first_pick          = @mixer.current_pick
-    teams_not_picked    = @mixer.choose
+    puts first_pick
+    teams_picked        = @mixer.choose
     second_pick         = @mixer.current_pick
-    teams_not_picked    = @mixer.choose
+    puts second_pick
+    teams_picked        = @mixer.choose
     third_pick          = @mixer.current_pick
+    puts third_pick
 
     refute first_pick == third_pick
     refute second_pick == third_pick
+  end
+
+  def test_draft_will_place_each_team_by_percentage_in_descending_order
+    teams_picked        = @mixer.choose
+    first_pick          = @mixer.current_pick
+    puts first_pick
+    teams_picked        = @mixer.choose
+    second_pick         = @mixer.current_pick
+    puts second_pick
+    teams_picked        = @mixer.choose
+    third_pick          = @mixer.current_pick
+    puts third_pick
+
+    refute first_pick == third_pick
+    refute second_pick == third_pick
+    rest                = @mixer.show_the_rest_of_the_lottery
+
+    binding.pry
+    assert_equal 11, rest.count
+    # fourth_pick =
   end
 end
