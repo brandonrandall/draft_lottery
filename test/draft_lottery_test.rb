@@ -44,21 +44,33 @@ class DraftLotteryTest < Minitest::Test
   end
 
   def test_cage_can_make_one_pick
-    teams_picked        = @mixer.choose(1)
+    starting_count = @mixer.balls_in_cage
+    teams_picked  = @mixer.choose(1)
 
     assert 1, @mixer.picks.count
     assert_equal Integer, @mixer.balls_in_cage.class
     assert (@mixer.balls_in_cage < 947), "Mixer count is not less than 947."
+    assert starting_count > @mixer.balls_in_cage
   end
 
   def test_cage_can_make_3_picks
+    starting_count = @mixer.balls_in_cage
+    teams_picked  = @mixer.choose(1)
 
-    teams_picked        = @mixer.choose(1)
     assert 1, @mixer.picks.count
-    teams_picked        = @mixer.choose(1)
+    assert starting_count > @mixer.balls_in_cage
+
+    starting_count = @mixer.balls_in_cage
+    teams_picked  = @mixer.choose(1)
+
     assert 2, @mixer.picks.count
-    teams_picked        = @mixer.choose(1)
+    assert starting_count > @mixer.balls_in_cage
+
+    starting_count = @mixer.balls_in_cage
+    teams_picked  = @mixer.choose(1)
+
     assert 3, @mixer.picks.count
+    assert starting_count > @mixer.balls_in_cage
     assert_equal 3, @mixer.picks.uniq.count
 
   end
