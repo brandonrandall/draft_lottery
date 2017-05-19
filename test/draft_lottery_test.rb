@@ -44,55 +44,33 @@ class DraftLotteryTest < Minitest::Test
   end
 
   def test_cage_can_make_one_pick
-    teams_picked        = @mixer.choose
-    current_picked_team = @mixer.current_pick
+    teams_picked        = @mixer.choose(1)
 
-    refute teams_picked.include?(current_picked_team)
+    assert 1, @mixer.picks.count
     assert_equal Integer, @mixer.balls_in_cage.class
     assert (@mixer.balls_in_cage < 947), "Mixer count is not less than 947."
   end
 
-  def test_cage_can_make_more_than_one_pick
-    teams_picked        = @mixer.choose
-    first_pick          = @mixer.current_pick
-    teams_picked        = @mixer.choose
-    current_picked_team = @mixer.current_pick
-
-    refute first_pick == current_picked_team
-  end
-
   def test_cage_can_make_3_picks
-    teams_picked        = @mixer.choose
-    first_pick          = @mixer.current_pick
-    puts first_pick
-    teams_picked        = @mixer.choose
-    second_pick         = @mixer.current_pick
-    puts second_pick
-    teams_picked        = @mixer.choose
-    third_pick          = @mixer.current_pick
-    puts third_pick
 
-    refute first_pick == third_pick
-    refute second_pick == third_pick
+    teams_picked        = @mixer.choose(1)
+    assert 1, @mixer.picks.count
+    teams_picked        = @mixer.choose(1)
+    assert 2, @mixer.picks.count
+    teams_picked        = @mixer.choose(1)
+    assert 3, @mixer.picks.count
+    assert_equal 3, @mixer.picks.uniq.count
+
   end
 
   def test_draft_will_place_each_team_by_percentage_in_descending_order
-    teams_picked        = @mixer.choose
-    first_pick          = @mixer.current_pick
-    puts first_pick
-    teams_picked        = @mixer.choose
-    second_pick         = @mixer.current_pick
-    puts second_pick
-    teams_picked        = @mixer.choose
-    third_pick          = @mixer.current_pick
-    puts third_pick
 
-    refute first_pick == third_pick
-    refute second_pick == third_pick
+    teams_picked        = @mixer.choose(3)
+    first_pick          = @mixer.current_pick
+    second_pick         = @mixer.current_pick
+    third_pick          = @mixer.current_pick
     rest                = @mixer.show_the_rest_of_the_lottery
 
-    binding.pry
-    assert_equal 11, rest.count
-    # fourth_pick =
+    assert_equal 10, rest.count
   end
 end
